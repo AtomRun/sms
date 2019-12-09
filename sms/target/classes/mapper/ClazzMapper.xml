@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leeup.sms.mapper.ClazzMapper">
+  <resultMap id="BaseResultMap" type="com.leeup.sms.bean.Clazz">
+    <id column="class_student_no" jdbcType="VARCHAR" property="classStudentNo" />
+    <result column="class_student_name" jdbcType="VARCHAR" property="classStudentName" />
+    <result column="institute" jdbcType="VARCHAR" property="institute" />
+    <result column="grade" jdbcType="SMALLINT" property="grade" />
+    <result column="classNum" jdbcType="TINYINT" property="classnum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    class_student_no, class_student_name, institute, grade, classNum
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_class
+    where class_student_no = #{classStudentNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_class
+    where class_student_no = #{classStudentNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.leeup.sms.bean.Clazz">
+    insert into t_class (class_student_no, class_student_name, 
+      institute, grade, classNum
+      )
+    values (#{classStudentNo,jdbcType=VARCHAR}, #{classStudentName,jdbcType=VARCHAR}, 
+      #{institute,jdbcType=VARCHAR}, #{grade,jdbcType=SMALLINT}, #{classnum,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.leeup.sms.bean.Clazz">
+    insert into t_class
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classStudentNo != null">
+        class_student_no,
+      </if>
+      <if test="classStudentName != null">
+        class_student_name,
+      </if>
+      <if test="institute != null">
+        institute,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="classnum != null">
+        classNum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classStudentNo != null">
+        #{classStudentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="classStudentName != null">
+        #{classStudentName,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null">
+        #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=SMALLINT},
+      </if>
+      <if test="classnum != null">
+        #{classnum,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leeup.sms.bean.Clazz">
+    update t_class
+    <set>
+      <if test="classStudentName != null">
+        class_student_name = #{classStudentName,jdbcType=VARCHAR},
+      </if>
+      <if test="institute != null">
+        institute = #{institute,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=SMALLINT},
+      </if>
+      <if test="classnum != null">
+        classNum = #{classnum,jdbcType=TINYINT},
+      </if>
+    </set>
+    where class_student_no = #{classStudentNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leeup.sms.bean.Clazz">
+    update t_class
+    set class_student_name = #{classStudentName,jdbcType=VARCHAR},
+      institute = #{institute,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=SMALLINT},
+      classNum = #{classnum,jdbcType=TINYINT}
+    where class_student_no = #{classStudentNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

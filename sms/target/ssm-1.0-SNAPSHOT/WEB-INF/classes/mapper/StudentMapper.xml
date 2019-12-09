@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leeup.sms.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.leeup.sms.bean.Student">
+    <id column="student_no" jdbcType="VARCHAR" property="studentNo" />
+    <result column="student_ name" jdbcType="VARCHAR" property="studentName" />
+    <result column="sex" jdbcType="CHAR" property="sex" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="nations" jdbcType="VARCHAR" property="nations" />
+    <result column="class_student_no" jdbcType="VARCHAR" property="classStudentNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    student_no, "student_ name", sex, birthday, nations, class_student_no
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_student
+    where student_no = #{studentNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_student
+    where student_no = #{studentNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.leeup.sms.bean.Student">
+    insert into t_student (student_no, "student_ name", sex, 
+      birthday, nations, class_student_no
+      )
+    values (#{studentNo,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, 
+      #{birthday,jdbcType=TIMESTAMP}, #{nations,jdbcType=VARCHAR}, #{classStudentNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.leeup.sms.bean.Student">
+    insert into t_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        student_no,
+      </if>
+      <if test="studentName != null">
+        "student_ name",
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="nations != null">
+        nations,
+      </if>
+      <if test="classStudentNo != null">
+        class_student_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="studentName != null">
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nations != null">
+        #{nations,jdbcType=VARCHAR},
+      </if>
+      <if test="classStudentNo != null">
+        #{classStudentNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leeup.sms.bean.Student">
+    update t_student
+    <set>
+      <if test="studentName != null">
+        "student_ name" = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nations != null">
+        nations = #{nations,jdbcType=VARCHAR},
+      </if>
+      <if test="classStudentNo != null">
+        class_student_no = #{classStudentNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where student_no = #{studentNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leeup.sms.bean.Student">
+    update t_student
+    set "student_ name" = #{studentName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      nations = #{nations,jdbcType=VARCHAR},
+      class_student_no = #{classStudentNo,jdbcType=VARCHAR}
+    where student_no = #{studentNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

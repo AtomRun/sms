@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leeup.sms.mapper.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.leeup.sms.bean.Course">
+    <id column="course_no" jdbcType="VARCHAR" property="courseNo" />
+    <result column="course_name" jdbcType="VARCHAR" property="courseName" />
+    <result column="credit_hour" jdbcType="DECIMAL" property="creditHour" />
+    <result column="course_hour" jdbcType="TINYINT" property="courseHour" />
+    <result column="prior_course" jdbcType="VARCHAR" property="priorCourse" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    course_no, course_name, credit_hour, course_hour, prior_course
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_course
+    where course_no = #{courseNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_course
+    where course_no = #{courseNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.leeup.sms.bean.Course">
+    insert into t_course (course_no, course_name, credit_hour, 
+      course_hour, prior_course)
+    values (#{courseNo,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, #{creditHour,jdbcType=DECIMAL}, 
+      #{courseHour,jdbcType=TINYINT}, #{priorCourse,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leeup.sms.bean.Course">
+    insert into t_course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseNo != null">
+        course_no,
+      </if>
+      <if test="courseName != null">
+        course_name,
+      </if>
+      <if test="creditHour != null">
+        credit_hour,
+      </if>
+      <if test="courseHour != null">
+        course_hour,
+      </if>
+      <if test="priorCourse != null">
+        prior_course,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courseNo != null">
+        #{courseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null">
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="creditHour != null">
+        #{creditHour,jdbcType=DECIMAL},
+      </if>
+      <if test="courseHour != null">
+        #{courseHour,jdbcType=TINYINT},
+      </if>
+      <if test="priorCourse != null">
+        #{priorCourse,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leeup.sms.bean.Course">
+    update t_course
+    <set>
+      <if test="courseName != null">
+        course_name = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="creditHour != null">
+        credit_hour = #{creditHour,jdbcType=DECIMAL},
+      </if>
+      <if test="courseHour != null">
+        course_hour = #{courseHour,jdbcType=TINYINT},
+      </if>
+      <if test="priorCourse != null">
+        prior_course = #{priorCourse,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where course_no = #{courseNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leeup.sms.bean.Course">
+    update t_course
+    set course_name = #{courseName,jdbcType=VARCHAR},
+      credit_hour = #{creditHour,jdbcType=DECIMAL},
+      course_hour = #{courseHour,jdbcType=TINYINT},
+      prior_course = #{priorCourse,jdbcType=VARCHAR}
+    where course_no = #{courseNo,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leeup.sms.mapper.ScoreMapper">
+  <resultMap id="BaseResultMap" type="com.leeup.sms.bean.Score">
+    <id column="student_no" jdbcType="VARCHAR" property="studentNo" />
+    <id column="course_no" jdbcType="VARCHAR" property="courseNo" />
+    <result column="term" jdbcType="VARCHAR" property="term" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    student_no, course_no, term, score
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.leeup.sms.bean.ScoreKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_score
+    where student_no = #{studentNo,jdbcType=VARCHAR}
+      and course_no = #{courseNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.leeup.sms.bean.ScoreKey">
+    delete from t_score
+    where student_no = #{studentNo,jdbcType=VARCHAR}
+      and course_no = #{courseNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.leeup.sms.bean.Score">
+    insert into t_score (student_no, course_no, term, 
+      score)
+    values (#{studentNo,jdbcType=VARCHAR}, #{courseNo,jdbcType=VARCHAR}, #{term,jdbcType=VARCHAR}, 
+      #{score,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.leeup.sms.bean.Score">
+    insert into t_score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        student_no,
+      </if>
+      <if test="courseNo != null">
+        course_no,
+      </if>
+      <if test="term != null">
+        term,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="studentNo != null">
+        #{studentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="courseNo != null">
+        #{courseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="term != null">
+        #{term,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.leeup.sms.bean.Score">
+    update t_score
+    <set>
+      <if test="term != null">
+        term = #{term,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where student_no = #{studentNo,jdbcType=VARCHAR}
+      and course_no = #{courseNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.leeup.sms.bean.Score">
+    update t_score
+    set term = #{term,jdbcType=VARCHAR},
+      score = #{score,jdbcType=DECIMAL}
+    where student_no = #{studentNo,jdbcType=VARCHAR}
+      and course_no = #{courseNo,jdbcType=VARCHAR}
+  </update>
+</mapper>
